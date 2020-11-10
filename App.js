@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import * as Font from "expo-font";
 import { Text, Image, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { NavigationContainer } from "@react-navigation/native";
+import Stack from "./navigation/Stack";
 
 const cacheImages = (images) =>
   images.map((image) => {
@@ -35,9 +37,9 @@ export default function App() {
   const onFinish = () => setIsReady(true);
 
   return isReady ? (
-    <View>
-      <Text>HI</Text>
-    </View>
+    <NavigationContainer>
+      <Stack></Stack>
+    </NavigationContainer>
   ) : (
     <AppLoading
       startAsync={loadAssets}
