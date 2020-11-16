@@ -12,7 +12,6 @@ export default () => {
     setPolicy({
       policy: policy.data,
     });
-    console.log(policy.data);
   };
 
   useEffect(() => {
@@ -26,7 +25,7 @@ export default () => {
         backgroundColor: "white",
       }}
     >
-      <Text>{policies.policy.length}</Text>
+      <Text>{policies.policy[0].age}</Text>
     </View>
   );
 };

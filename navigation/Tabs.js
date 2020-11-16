@@ -13,7 +13,6 @@ export default ({ route, navigation }) => {
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: getFocusedRouteNameFromRoute(route) || "Home",
-      //   headerShown: false,
       //   headerStyle: {
       //     backgroundColor: "blue",
       //   },

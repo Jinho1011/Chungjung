@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text } from "react-native";
 import { policyApi } from "../api";
 
@@ -12,7 +12,6 @@ export default () => {
     setPolicy({
       policy: policy.data,
     });
-    console.log(policy.data);
   };
 
   useEffect(() => {
@@ -20,7 +19,12 @@ export default () => {
   }, []);
 
   return (
-    <View>
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: "white",
+      }}
+    >
       <Text>Search</Text>
     </View>
   );
