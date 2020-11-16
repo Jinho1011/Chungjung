@@ -25,7 +25,7 @@ export default () => {
         backgroundColor: "white",
       }}
     >
-      <Text>{policies.policy[0].age}</Text>
+      <Text>{policies.policy.length}</Text>
     </View>
   );
 };
