@@ -22,7 +22,9 @@ export default ({ route, navigation }) => {
 
   return (
     <Tabs.Navigator
+      initialRouteName="Home"
       screenOptions={({ route }) => ({
+        headerShown: false,
         tabBarIcon: ({ focused }) => {
           let iconName = Platform.OS === "ios" ? "ios-" : "md-";
 
@@ -37,7 +39,7 @@ export default ({ route, navigation }) => {
           return (
             <Ionicons
               name={iconName}
-              color={focused ? "white" : "grey"}
+              color={focused ? "black" : "grey"}
               size={24}
             />
           );
@@ -46,8 +48,8 @@ export default ({ route, navigation }) => {
       tabBarOptions={{
         showLabel: false,
         style: {
-          backgroundColor: "black",
-          borderTopColor: "black",
+          backgroundColor: "white",
+          borderTopColor: "white",
         },
       }}
     >

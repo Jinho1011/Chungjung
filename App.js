@@ -41,7 +41,7 @@ export default function App() {
       <NavigationContainer>
         <Stack></Stack>
       </NavigationContainer>
-      <StatusBar barStyle="light-content"></StatusBar>
+      <StatusBar barStyle="dark-content"></StatusBar>
     </>
   ) : (
     <AppLoading

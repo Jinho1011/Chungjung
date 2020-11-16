@@ -1,19 +1,32 @@
-import React from "react";
-import { View, Text, Button } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, Text } from "react-native";
+import { policyApi } from "../api";
 
-export default ({ navigation }) => {
+export default () => {
+  const [policies, setPolicy] = useState({
+    policy: [],
+  });
+
+  const getData = async () => {
+    const policy = await policyApi.policy();
+    setPolicy({
+      policy: policy.data,
+    });
+    console.log(policy.data);
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
   return (
     <View
       style={{
         flex: 1,
-        backgroundColor: "black",
+        backgroundColor: "white",
       }}
     >
-      <Text>Home</Text>
-      <Button
-        title="Detail"
-        onPress={() => navigation.navigate("Detail")}
-      ></Button>
+      <Text>{policies.policy.length}</Text>
     </View>
   );
 };
