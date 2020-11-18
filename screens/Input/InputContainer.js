@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { CommonActions } from "@react-navigation/native";
 import DropDownPicker from "react-native-dropdown-picker";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import styled from "styled-components";
+import styled from "styled-components/native";
 
-const storeData = async (key, value) => {
+const storeData = async (value) => {
   try {
-    await AsyncStorage.setItem(key, value);
+    await AsyncStorage.setItem("@USER", JSON.stringify(value));
   } catch (e) {
     console.log(e);
   }
@@ -21,26 +21,81 @@ for (var i = 0; i < 64; i++) {
   });
 }
 
+var eduArr = [
+  {
+    label: "대학생",
+    value: "대학생",
+  },
+  {
+    label: "대학원생",
+    value: "대학원생",
+  },
+  {
+    label: "대졸",
+    value: "대졸",
+  },
+  {
+    label: "고졸",
+    value: "고졸",
+  },
+];
+
 var regionArr = [
   {
-    label: "서울특별시",
-    value: "서울특별시",
+    label: "서울",
+    value: "서울",
   },
   {
-    label: "경기도",
-    value: "경기도",
+    label: "부산",
+    value: "부산",
   },
   {
-    label: "강원도",
-    value: "강원도",
+    label: "인천",
+    value: "인천",
   },
   {
-    label: "",
-    value: "서울특별시",
+    label: "대구",
+    value: "대구",
   },
   {
-    label: "서울특별시",
-    value: "서울특별시",
+    label: "광주",
+    value: "광주",
+  },
+  {
+    label: "대전",
+    value: "대전",
+  },
+  {
+    label: "울산",
+    value: "울산",
+  },
+  {
+    label: "강원",
+    value: "강원",
+  },
+  {
+    label: "충북",
+    value: "충북",
+  },
+  {
+    label: "충남",
+    value: "충남",
+  },
+  {
+    label: "전북",
+    value: "전북",
+  },
+  {
+    label: "전남",
+    value: "전남",
+  },
+  {
+    label: "경남",
+    value: "경남",
+  },
+  {
+    label: "제주",
+    value: "제주",
   },
 ];
 
@@ -122,6 +177,7 @@ const InputButton3 = styled.TouchableOpacity`
   background-color: #525252;
   border-radius: 16px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  z-index: 10;
 `;
 
 const InputButtonText2 = styled.Text`
@@ -131,10 +187,16 @@ const InputButtonText2 = styled.Text`
   font-weight: bold;
 `;
 
+const Padding = styled.View`
+  height: 40px;
+`;
+
 export default ({ navigation }) => {
   const [name, setName] = useState("");
   const [sex, setSex] = useState("");
   const [age, setAge] = useState("");
+  const [region, setRegion] = useState("");
+  const [edu, setEdu] = useState("");
 
   return (
     <InputContainer>
@@ -184,6 +246,7 @@ export default ({ navigation }) => {
           containerStyle={{ height: 46 }}
           placeholder="나이를 선택하세요"
           onChangeItem={(item) => setAge(item.value)}
+          zIndex={2000}
           style={{
             borderTopLeftRadius: 16,
             borderTopRightRadius: 16,
@@ -207,19 +270,14 @@ export default ({ navigation }) => {
             shadowRadius: 12,
           }}
         />
-      </InputGroup>
-
-      <InputGroup
-        style={{
-          zInedx: 4000,
-        }}
-      >
+        <Padding></Padding>
         <InputLabel>지역</InputLabel>
         <DropDownPicker
           items={regionArr}
           containerStyle={{ height: 46 }}
           placeholder="지역을 선택하세요"
-          onChangeItem={(item) => setAge(item.value)}
+          onChangeItem={(item) => setRegion(item.value)}
+          zIndex={1800}
           style={{
             borderTopLeftRadius: 16,
             borderTopRightRadius: 16,
@@ -243,19 +301,15 @@ export default ({ navigation }) => {
             shadowRadius: 12,
           }}
         />
-      </InputGroup>
+        <Padding></Padding>
 
-      <InputGroup
-        style={{
-          zInedx: 10,
-        }}
-      >
         <InputLabel>학력</InputLabel>
         <DropDownPicker
-          items={ageArr}
+          items={eduArr}
           containerStyle={{ height: 46 }}
           placeholder="학력을 선택하세요"
-          onChangeItem={(item) => setAge(item.value)}
+          onChangeItem={(item) => setEdu(item.value)}
+          zIndex={1600}
           style={{
             borderTopLeftRadius: 16,
             borderTopRightRadius: 16,
@@ -279,37 +333,28 @@ export default ({ navigation }) => {
             shadowRadius: 12,
           }}
         />
+
+        <InputButton3
+          onPress={() => {
+            storeData({
+              name: name,
+              sex: sex,
+              age: age,
+              region: region,
+              edu: edu,
+            });
+
+            navigation.dispatch(
+              CommonActions.reset({
+                index: 0,
+                routes: [{ name: "Tab" }],
+              })
+            );
+          }}
+        >
+          <InputButtonText2>확인</InputButtonText2>
+        </InputButton3>
       </InputGroup>
-
-      {/* <TextInput
-        placeholder="Password"
-        secureTextEntry={true}
-        autoCapitalize="none"
-        placeholderTextColor="white"
-        onChangeText={(val) => setPass(val)}
-      /> */}
-
-      {/* <TextInput
-        placeholder="Email"
-        autoCapitalize="none"
-        placeholderTextColor="white"
-        onChangeText={(val) => setEmail(val)}
-      /> */}
-
-      <InputButton3
-        onPress={() => {
-          storeData("USER", {});
-
-          navigation.dispatch(
-            CommonActions.reset({
-              index: 0,
-              routes: [{ name: "Tab" }],
-            })
-          );
-        }}
-      >
-        <InputButtonText2>확인</InputButtonText2>
-      </InputButton3>
     </InputContainer>
   );
 };
