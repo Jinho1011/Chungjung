@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { View, Text } from "react-native";
-import { policyApi } from "../api";
+import { policyApi } from "../../api";
+import SearchPresenter from "./SearchPresenter";
 
 export default () => {
   const [policies, setPolicy] = useState({
     policy: [],
+    loading: true,
   });
 
   const getData = async () => {
     const policy = await policyApi.policy();
     setPolicy({
       policy: policy.data,
+      loading: false,
     });
   };
 
@@ -18,14 +20,5 @@ export default () => {
     getData();
   }, []);
 
-  return (
-    <View
-      style={{
-        flex: 1,
-        backgroundColor: "white",
-      }}
-    >
-      <Text>Search</Text>
-    </View>
-  );
+  return <SearchPresenter {...policies}></SearchPresenter>;
 };

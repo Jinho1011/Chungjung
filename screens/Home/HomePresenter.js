@@ -81,7 +81,7 @@ const Recommand = styled.View`
 `;
 
 const RecommandHeader = styled.Text`
-  font-size: 16px;
+  font-size: 18px;
   color: #333;
   margin-bottom: 12px;
 `;
@@ -98,13 +98,14 @@ const RecommandUser = styled.View`
   padding-right: 14px;
   padding-left: 14px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-  background-color: #546ea4;
   margin-right: 10px;
   border-radius: 12px;
+  border-width: 2px;
+  border-color: #34314c;
 `;
 
 const RecommandUserText = styled.Text`
-  color: white;
+  color: #34314c;
   font-size: 16px;
   font-weight: bold;
 `;
@@ -130,7 +131,17 @@ const RecommnadElements = styled.View`
 
 const RecommandCategoryContainer = styled.View`
   border-radius: 16px;
-  background-color: #ff7979;
+  ${(props) => {
+    if (props.category == "설자리") {
+      return "background-color: #61c99c";
+    } else if (props.category == "일자리") {
+      return "background-color: #FCC751";
+    } else if (props.category == "살자리") {
+      return "background-color: #47B8E0";
+    } else if (props.category == "놀자리") {
+      return "background-color: #FF7473";
+    }
+  }};
 `;
 
 const RecommandCategory = styled.Text`
@@ -237,9 +248,7 @@ export default ({ loading, policy, filtered, user }) => {
             >
               {policy.map((p) => (
                 <Section key={p.id}>
-                  <SlideHeader>{p.title}</SlideHeader>
-                  {p.url ? <SlideBene>{p.url}</SlideBene> : null}
-                  <SlideBene>{p.benefits}</SlideBene>
+                  <SlideImage></SlideImage>
                 </Section>
               ))}
             </Swiper>
@@ -268,8 +277,8 @@ export default ({ loading, policy, filtered, user }) => {
               >
                 <RecommnadElements>
                   <RecommandTitle>{p.title}</RecommandTitle>
-                  <RecommandCategoryContainer>
-                    <RecommandCategory>{p.category} </RecommandCategory>
+                  <RecommandCategoryContainer category={p.category}>
+                    <RecommandCategory>{p.category}</RecommandCategory>
                   </RecommandCategoryContainer>
                 </RecommnadElements>
 

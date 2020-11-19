@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import Home from "../screens/Home/HomeContainer";
-import Search from "../screens/Search";
+import Search from "../screens/Search/SearchContainer";
 import Favs from "../screens/Favs";
 import { Platform } from "react-native";
 

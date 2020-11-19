@@ -11,6 +11,7 @@ const storeData = async (value) => {
     console.log(e);
   }
 };
+
 var ageArr = [];
 
 for (var i = 0; i < 64; i++) {
