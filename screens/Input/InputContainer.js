@@ -46,6 +46,10 @@ var regionArr = [
     value: "서울",
   },
   {
+    label: "경기",
+    value: "경기",
+  },
+  {
     label: "부산",
     value: "부산",
   },
@@ -101,7 +105,7 @@ var regionArr = [
 
 const InputContainer = styled.View`
   padding: 12px;
-  padding-top: 80px;
+  padding-top: 60px;
   background: #fcfcfc;
   height: 100%;
   display: flex;

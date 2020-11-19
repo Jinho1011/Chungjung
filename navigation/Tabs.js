@@ -2,7 +2,7 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
-import Home from "../screens/Home";
+import Home from "../screens/Home/HomeContainer";
 import Search from "../screens/Search";
 import Favs from "../screens/Favs";
 import { Platform } from "react-native";
@@ -12,10 +12,8 @@ const Tabs = createBottomTabNavigator();
 export default ({ route, navigation }) => {
   React.useLayoutEffect(() => {
     navigation.setOptions({
-      headerTitle: getFocusedRouteNameFromRoute(route) || "Home",
-      //   headerStyle: {
-      //     backgroundColor: "blue",
-      //   },
+      headerShown: false,
+      // headerTitle: getFocusedRouteNameFromRoute(route) || "Home",
     });
   }, [navigation, route]);
 

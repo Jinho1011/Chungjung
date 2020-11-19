@@ -10,7 +10,6 @@ export default () => (
   <Stack.Navigator
     initialRouteName="Input"
     screenOptions={{
-      // headerShown: false,
       headerStyle: {
         backgroundColor: "white",
         borderBottomColor: "white",
