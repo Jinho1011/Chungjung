@@ -135,8 +135,8 @@ const TextInput = styled.TextInput`
   padding-bottom: 8px;
   padding-left: 8px;
   color: black;
-  border-bottom-width: 2px;
-  border-bottom-color: black;
+  border-bottom-width: 1px;
+  border-bottom-color: #333;
 `;
 
 const InputGroup = styled.View`

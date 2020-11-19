@@ -1,8 +1,9 @@
 import React from "react";
 import Swiper from "react-native-web-swiper";
 import styled from "styled-components/native";
-import { ActivityIndicator, Dimensions } from "react-native";
+import { ActivityIndicator, Dimensions, StatusBar } from "react-native";
 import YoutubePlayer from "react-native-youtube-iframe";
+import { useNavigation } from "@react-navigation/native";
 
 const { width, height } = Dimensions.get("screen");
 
@@ -38,7 +39,7 @@ const HeaderUser = styled.Text`
 
 const Slider = styled.View`
   width: ${width}px;
-  height: 140px;
+  height: 180px;
   padding: 12px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
 `;
@@ -46,10 +47,12 @@ const Slider = styled.View`
 const Section = styled.View`
   background-color: white;
   border-radius: 16px;
-  height: 120px;
+  height: 100%;
   margin-right: 8px;
   margin-left: 8px;
-  padding: 16px;
+  padding-top: 16px;
+  padding-right: 16px;
+  padding-left: 16px;
 `;
 
 const SlideHeader = styled.Text`
@@ -97,7 +100,7 @@ const RecommandUserText = styled.Text`
   font-weight: bold;
 `;
 
-const RecommandSection = styled.View`
+const RecommandSection = styled.TouchableOpacity`
   padding-bottom: 10px;
   background-color: white;
   border-radius: 16px;
@@ -153,81 +156,96 @@ const Padding = styled.View`
   padding-top: 60px;
 `;
 
-export default ({ loading, policy, filtered, user }) => (
-  <Container>
-    {loading ? (
-      <ActivityIndicator color="black" size="large"></ActivityIndicator>
-    ) : (
-      <>
-        <Header>
-          <HeaderSection>
-            <HeaderIcon style={{ display: "none" }}>청정구역</HeaderIcon>
-          </HeaderSection>
-          <HeaderSection>
-            <HeaderIcon>청정구역</HeaderIcon>
-          </HeaderSection>
-          <HeaderSection>
-            <HeaderUser>{user.name}님</HeaderUser>
-          </HeaderSection>
-        </Header>
-        <Slider>
-          <Swiper
-            controlsEnabled={false}
-            loop
-            timeout={3}
-            springConfig={{ speed: 4, bounciness: 5 }}
-          >
-            {policy.map((p) => (
-              <Section key={p.id}>
-                <SlideHeader>{p.title}</SlideHeader>
-                {p.url ? <SlideBene>{p.url}</SlideBene> : null}
-                <SlideBene>{p.benefits}</SlideBene>
-              </Section>
+export default ({ loading, policy, filtered, user }) => {
+  const navigation = useNavigation();
+  const goToDetail = (policy) => {
+    navigation.navigate("Detail", {
+      policy,
+      user,
+    });
+  };
+
+  return (
+    <Container>
+      {loading ? (
+        <ActivityIndicator color="black" size="large"></ActivityIndicator>
+      ) : (
+        <>
+          <Header>
+            <HeaderSection>
+              <HeaderIcon style={{ display: "none" }}>청정구역</HeaderIcon>
+            </HeaderSection>
+            <HeaderSection>
+              <HeaderIcon>청정구역</HeaderIcon>
+            </HeaderSection>
+            <HeaderSection>
+              <HeaderUser>{user.name}님</HeaderUser>
+            </HeaderSection>
+          </Header>
+          <Slider>
+            <Swiper
+              controlsEnabled={true}
+              loop
+              timeout={3}
+              springConfig={{ speed: 4, bounciness: 5 }}
+              controlsProps={{
+                prevTitle: "<",
+                nextTitle: ">",
+              }}
+            >
+              {policy.map((p) => (
+                <Section key={p.id}>
+                  <SlideHeader>{p.title}</SlideHeader>
+                  {p.url ? <SlideBene>{p.url}</SlideBene> : null}
+                  <SlideBene>{p.benefits}</SlideBene>
+                </Section>
+              ))}
+            </Swiper>
+          </Slider>
+          <Recommand>
+            <RecommandHeader>사용자 맞춤형 정책</RecommandHeader>
+            <RecommandUserContainer>
+              <RecommandUser>
+                <RecommandUserText>{user.age}살</RecommandUserText>
+              </RecommandUser>
+              <RecommandUser>
+                <RecommandUserText>{user.sex}</RecommandUserText>
+              </RecommandUser>
+              <RecommandUser>
+                <RecommandUserText>{user.region}</RecommandUserText>
+              </RecommandUser>
+              <RecommandUser>
+                <RecommandUserText>{user.edu}</RecommandUserText>
+              </RecommandUser>
+            </RecommandUserContainer>
+
+            {filtered.map((p) => (
+              <RecommandSection key={p.id} onPress={() => goToDetail(p)}>
+                <RecommnadElements>
+                  <RecommandTitle>{p.title}</RecommandTitle>
+                  <RecommandCategory>{p.category} </RecommandCategory>
+                </RecommnadElements>
+
+                <YoutubePlayer
+                  height={220}
+                  videoId={p.url == "" ? "I5jPmK5sSIM" : p.url}
+                />
+
+                <RecommnadElement>
+                  <RecommandSub>혜택</RecommandSub>
+                  <RecommandMain>{p.benefits}</RecommandMain>
+                </RecommnadElement>
+                <RecommnadElement>
+                  <RecommandSub>현재 상태</RecommandSub>
+                  <RecommandMain>{p.state}</RecommandMain>
+                </RecommnadElement>
+              </RecommandSection>
             ))}
-          </Swiper>
-        </Slider>
-        <Recommand>
-          <RecommandHeader>사용자 맞춤형 정책</RecommandHeader>
-          <RecommandUserContainer>
-            <RecommandUser>
-              <RecommandUserText>{user.age}살</RecommandUserText>
-            </RecommandUser>
-            <RecommandUser>
-              <RecommandUserText>{user.sex}</RecommandUserText>
-            </RecommandUser>
-            <RecommandUser>
-              <RecommandUserText>{user.region}</RecommandUserText>
-            </RecommandUser>
-            <RecommandUser>
-              <RecommandUserText>{user.edu}</RecommandUserText>
-            </RecommandUser>
-          </RecommandUserContainer>
-
-          {filtered.map((p) => (
-            <RecommandSection key={p.id}>
-              <RecommnadElements>
-                <RecommandTitle>{p.title}</RecommandTitle>
-                <RecommandCategory>{p.category} </RecommandCategory>
-              </RecommnadElements>
-
-              <YoutubePlayer
-                height={220}
-                videoId={p.url == "" ? "I5jPmK5sSIM" : p.url}
-              />
-
-              <RecommnadElement>
-                <RecommandSub>혜택</RecommandSub>
-                <RecommandMain>{p.benefits}</RecommandMain>
-              </RecommnadElement>
-              <RecommnadElement>
-                <RecommandSub>현재 상태</RecommandSub>
-                <RecommandMain>{p.state}</RecommandMain>
-              </RecommnadElement>
-            </RecommandSection>
-          ))}
-        </Recommand>
-        <Padding></Padding>
-      </>
-    )}
-  </Container>
-);
+          </Recommand>
+          <Padding></Padding>
+          <StatusBar barStyle={"light-content"}></StatusBar>
+        </>
+      )}
+    </Container>
+  );
+};
