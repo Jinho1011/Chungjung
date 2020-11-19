@@ -2,10 +2,11 @@ import React from "react";
 import Swiper from "react-native-web-swiper";
 import styled from "styled-components/native";
 import { ActivityIndicator, Dimensions } from "react-native";
+import YoutubePlayer from "react-native-youtube-iframe";
 
 const { width, height } = Dimensions.get("screen");
 
-const Container = styled.View`
+const Container = styled.ScrollView`
   flex: 1;
   padding-top: 60px;
   background-color: #fcfcfc;
@@ -97,14 +98,60 @@ const RecommandUserText = styled.Text`
 `;
 
 const RecommandSection = styled.View`
+  padding-bottom: 10px;
   background-color: white;
   border-radius: 16px;
-  height: 120px;
-  padding: 16px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+  margin-bottom: 40px;
 `;
 
-const RecommandTitle = styled.Text``;
+const RecommnadElements = styled.View`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const RecommandCategory = styled.Text`
+  padding: 16px;
+  font-size: 16px;
+  color: #333;
+`;
+
+const RecommandTitle = styled.Text`
+  padding: 16px;
+  font-size: 16px;
+  font-weight: bold;
+`;
+
+const RecommnadElement = styled.View`
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
+
+const RecommandSub = styled.Text`
+  flex: 1;
+  font-size: 16px;
+  padding-right: 16px;
+  font-weight: bold;
+  color: #333;
+`;
+
+const RecommandMain = styled.Text`
+  flex: 4;
+  font-size: 16px;
+  color: #262626;
+  overflow: hidden;
+`;
+
+const Padding = styled.View`
+  padding-top: 60px;
+`;
 
 export default ({ loading, policy, filtered, user }) => (
   <Container>
@@ -143,7 +190,7 @@ export default ({ loading, policy, filtered, user }) => (
           <RecommandHeader>사용자 맞춤형 정책</RecommandHeader>
           <RecommandUserContainer>
             <RecommandUser>
-              <RecommandUserText>{user.age}</RecommandUserText>
+              <RecommandUserText>{user.age}살</RecommandUserText>
             </RecommandUser>
             <RecommandUser>
               <RecommandUserText>{user.sex}</RecommandUserText>
@@ -158,10 +205,28 @@ export default ({ loading, policy, filtered, user }) => (
 
           {filtered.map((p) => (
             <RecommandSection key={p.id}>
-              <RecommandTitle>{p.title}</RecommandTitle>
+              <RecommnadElements>
+                <RecommandTitle>{p.title}</RecommandTitle>
+                <RecommandCategory>{p.category} </RecommandCategory>
+              </RecommnadElements>
+
+              <YoutubePlayer
+                height={220}
+                videoId={p.url == "" ? "I5jPmK5sSIM" : p.url}
+              />
+
+              <RecommnadElement>
+                <RecommandSub>혜택</RecommandSub>
+                <RecommandMain>{p.benefits}</RecommandMain>
+              </RecommnadElement>
+              <RecommnadElement>
+                <RecommandSub>현재 상태</RecommandSub>
+                <RecommandMain>{p.state}</RecommandMain>
+              </RecommnadElement>
             </RecommandSection>
           ))}
         </Recommand>
+        <Padding></Padding>
       </>
     )}
   </Container>
