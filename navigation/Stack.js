@@ -20,7 +20,13 @@ export default () => (
     }}
   >
     <Stack.Screen name="Tab" component={Tabs}></Stack.Screen>
-    <Stack.Screen name="Detail" component={Detail}></Stack.Screen>
+    <Stack.Screen
+      name="Detail"
+      component={Detail}
+      options={{
+        headerShown: false,
+      }}
+    ></Stack.Screen>
     <Stack.Screen
       name="Input"
       component={Input}

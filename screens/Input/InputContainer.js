@@ -178,7 +178,7 @@ const InputButton3 = styled.TouchableOpacity`
   margin-top: 48px;
   padding-top: 16px;
   padding-bottom: 16px;
-  background-color: #525252;
+  background-color: #fbc651;
   border-radius: 16px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
   z-index: 10;

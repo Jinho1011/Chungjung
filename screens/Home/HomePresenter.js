@@ -9,12 +9,20 @@ const { width, height } = Dimensions.get("screen");
 
 const Container = styled.ScrollView`
   flex: 1;
-  padding-top: 60px;
   background-color: #fcfcfc;
+`;
+
+const Background = styled.Image`
+  flex: 1;
+  width: ${width}px;
+  height: ${height}px;
+  position: absolute;
+  top: 0;
 `;
 
 const Header = styled.View`
   display: flex;
+  padding-top: 60px;
   flex-direction: row;
   width: 100%;
   padding-bottom: 10px;
@@ -28,6 +36,7 @@ const HeaderIcon = styled.Text`
   text-align: center;
   font-size: 18px;
   font-weight: bold;
+  color: white;
 `;
 
 const HeaderUser = styled.Text`
@@ -112,13 +121,26 @@ const RecommnadElements = styled.View`
   display: flex;
   flex-direction: row;
   align-items: center;
+  padding-left: 0px;
+  padding-right: 16px;
+  padding-top: 8px;
+  padding-bottom: 8px;
   justify-content: space-between;
 `;
 
+const RecommandCategoryContainer = styled.View`
+  border-radius: 16px;
+  background-color: #ff7979;
+`;
+
 const RecommandCategory = styled.Text`
-  padding: 16px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-right: 14px;
+  padding-left: 14px;
   font-size: 16px;
-  color: #333;
+  font-weight: bold;
+  color: white;
 `;
 
 const RecommandTitle = styled.Text`
@@ -158,11 +180,28 @@ const Padding = styled.View`
 
 export default ({ loading, policy, filtered, user }) => {
   const navigation = useNavigation();
-  const goToDetail = (policy) => {
-    navigation.navigate("Detail", {
-      policy,
-      user,
-    });
+  const goToDetail = (id, url) => {
+    if (id == 1) {
+      navigation.navigate("Detail", {
+        id,
+        url,
+      });
+    } else if (id == 2) {
+      navigation.navigate("Detail", {
+        id,
+        url,
+      });
+    } else if (id == 3) {
+      navigation.navigate("Detail", {
+        id,
+        url,
+      });
+    } else if (id == 4) {
+      navigation.navigate("Detail", {
+        id,
+        url,
+      });
+    }
   };
 
   return (
@@ -171,6 +210,9 @@ export default ({ loading, policy, filtered, user }) => {
         <ActivityIndicator color="black" size="large"></ActivityIndicator>
       ) : (
         <>
+          <Background
+            source={require("../../assets/homeBackground.png")}
+          ></Background>
           <Header>
             <HeaderSection>
               <HeaderIcon style={{ display: "none" }}>청정구역</HeaderIcon>
@@ -179,7 +221,7 @@ export default ({ loading, policy, filtered, user }) => {
               <HeaderIcon>청정구역</HeaderIcon>
             </HeaderSection>
             <HeaderSection>
-              <HeaderUser>{user.name}님</HeaderUser>
+              <HeaderIcon style={{ display: "none" }}>청정구역</HeaderIcon>
             </HeaderSection>
           </Header>
           <Slider>
@@ -220,10 +262,15 @@ export default ({ loading, policy, filtered, user }) => {
             </RecommandUserContainer>
 
             {filtered.map((p) => (
-              <RecommandSection key={p.id} onPress={() => goToDetail(p)}>
+              <RecommandSection
+                key={p.id}
+                onPress={() => goToDetail(p.id, p.url)}
+              >
                 <RecommnadElements>
                   <RecommandTitle>{p.title}</RecommandTitle>
-                  <RecommandCategory>{p.category} </RecommandCategory>
+                  <RecommandCategoryContainer>
+                    <RecommandCategory>{p.category} </RecommandCategory>
+                  </RecommandCategoryContainer>
                 </RecommnadElements>
 
                 <YoutubePlayer

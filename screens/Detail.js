@@ -1,10 +1,26 @@
 import React from "react";
-import { View, Text } from "react-native";
+import styled from "styled-components/native";
+import YoutubePlayer from "react-native-youtube-iframe";
 
-export default () => {
+const Image = styled.Image``;
+
+const Container = styled.ScrollView`
+  flex: 1;
+  background-color: #fcfcfc;
+`;
+
+export default (route) => {
+  const Images = [
+    require("../assets/policy1.png"),
+    require("../assets/policy2.png"),
+    require("../assets/policy3.png"),
+    require("../assets/policy4.png"),
+  ];
+
   return (
-    <View>
-      <Text>Detail</Text>
-    </View>
+    <Container>
+      <Image source={Images[route.route.params.id - 1]}></Image>
+      <YoutubePlayer height={220} videoId={route.route.params.url} />
+    </Container>
   );
 };
