@@ -1,7 +1,7 @@
 import React from "react";
 import Swiper from "react-native-web-swiper";
 import styled from "styled-components/native";
-import { ActivityIndicator, Dimensions, StatusBar } from "react-native";
+import { ActivityIndicator, Dimensions } from "react-native";
 import YoutubePlayer from "react-native-youtube-iframe";
 import { useNavigation } from "@react-navigation/native";
 
@@ -25,7 +25,7 @@ const Header = styled.View`
   padding-top: 60px;
   flex-direction: row;
   width: 100%;
-  padding-bottom: 10px;
+  padding-bottom: 24px;
 `;
 
 const HeaderSection = styled.View`
@@ -46,37 +46,36 @@ const HeaderUser = styled.Text`
   font-weight: bold;
 `;
 
+const SliderContainer = styled.View`
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding-left: 16px;
+  padding-right: 16px;
+`;
+
 const Slider = styled.View`
-  width: ${width}px;
+  width: 100%;
   height: 180px;
-  padding: 12px;
+  border-radius: 16px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
 `;
 
 const Section = styled.View`
   background-color: white;
   border-radius: 16px;
-  height: 100%;
-  margin-right: 8px;
-  margin-left: 8px;
-  padding-top: 16px;
-  padding-right: 16px;
-  padding-left: 16px;
 `;
 
-const SlideHeader = styled.Text`
-  font-size: 24px;
-  font-weight: bold;
-  padding-bottom: 4px;
-  margin-bottom: 10px;
-`;
+const SlideImage = styled.Image`
+  border-radius: 16px;
 
-const SlideBene = styled.Text`
-  font-size: 16px;
-  color: #333;
+  height: 180px;
+  width: 100%;
 `;
 
 const Recommand = styled.View`
+  margin-top: 24px;
   padding: 16px;
 `;
 
@@ -189,6 +188,13 @@ const Padding = styled.View`
   padding-top: 60px;
 `;
 
+const StatusBar = styled.StatusBar``;
+
+const Images = [
+  require("../../assets/banner1.png"),
+  require("../../assets/banner2.png"),
+];
+
 export default ({ loading, policy, filtered, user }) => {
   const navigation = useNavigation();
   const goToDetail = (id, url) => {
@@ -235,24 +241,32 @@ export default ({ loading, policy, filtered, user }) => {
               <HeaderIcon style={{ display: "none" }}>청정구역</HeaderIcon>
             </HeaderSection>
           </Header>
-          <Slider>
-            <Swiper
-              controlsEnabled={true}
-              loop
-              timeout={3}
-              springConfig={{ speed: 4, bounciness: 5 }}
-              controlsProps={{
-                prevTitle: "<",
-                nextTitle: ">",
-              }}
-            >
-              {policy.map((p) => (
-                <Section key={p.id}>
-                  <SlideImage></SlideImage>
-                </Section>
-              ))}
-            </Swiper>
-          </Slider>
+          <SliderContainer>
+            <Slider>
+              <Swiper
+                controlsEnabled={true}
+                loop
+                timeout={3}
+                springConfig={{ speed: 4, bounciness: 5 }}
+                controlsProps={{
+                  prevTitle: "<",
+                  nextTitle: ">",
+                }}
+              >
+                {Images.map((i) => (
+                  <Section key={i}>
+                    <SlideImage
+                      source={i}
+                      style={{
+                        resizeMode: "cover",
+                      }}
+                    ></SlideImage>
+                  </Section>
+                ))}
+              </Swiper>
+            </Slider>
+          </SliderContainer>
+
           <Recommand>
             <RecommandHeader>사용자 맞춤형 정책</RecommandHeader>
             <RecommandUserContainer>

@@ -117,7 +117,7 @@ const InputHeaderText = styled.Text`
   color: black;
   font-weight: bold;
   text-align: center;
-  margin-bottom: 36px; ;
+  margin-bottom: 3px;
 `;
 
 const InputLabel = styled.Text`
@@ -176,12 +176,12 @@ const InputButtonText = styled.Text`
 
 const InputButton3 = styled.TouchableOpacity`
   width: 100%;
-  margin-top: 48px;
   padding-top: 16px;
   padding-bottom: 16px;
   background-color: #fbc651;
   border-radius: 16px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  margin-top: 60px;
   z-index: 10;
 `;
 
@@ -190,6 +190,19 @@ const InputButtonText2 = styled.Text`
   color: #fff;
   font-size: 18px;
   font-weight: bold;
+`;
+
+const InputHeaderContainer = styled.View`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-bottom: 12px;
+  align-items: center;
+`;
+
+const InputHeaderIcon = styled.Image`
+  width: 48px;
+  height: 48px;
 `;
 
 const Padding = styled.View`
@@ -205,7 +218,12 @@ export default ({ navigation }) => {
 
   return (
     <InputContainer>
-      <InputHeaderText>인적 사항을 알려주세요 👋 </InputHeaderText>
+      <InputHeaderContainer>
+        <InputHeaderIcon
+          source={require("../../assets/logo-black.png")}
+        ></InputHeaderIcon>
+        <InputHeaderText>인적 사항을 알려주세요 </InputHeaderText>
+      </InputHeaderContainer>
 
       <InputGroup>
         <InputLabel>이름</InputLabel>
